@@ -4,5 +4,7 @@ window.onkeydown = function (e) {
 		document.tile = ("up")
 	} else if (code === 40) { //down key
 		document.title = ("down")
+	} else if (code === 32) { //space
+		play_airhorn();
 	}
 };
