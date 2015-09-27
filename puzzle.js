@@ -47,10 +47,12 @@ function draw() {
 
 //Draw Main Assets
 var bg = new Image();
+
 bg.onload = function(){
 	ctx.drawImage(bg,0,0);
 	
 	var tile = new Image();
+
 	tile.onload = function(){
 		for (var row = 0; row < 8; row++) {
 			for (var col = 0; col < 8; col++) {
