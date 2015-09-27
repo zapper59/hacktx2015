@@ -19,20 +19,34 @@ Game = function() {
 	this.enemies.push({x:.2, y:.4, w:this.enemiesSize, h:this.enemiesSize});
 	this.numenemies = 10;
 	this.score = 0;
+	this.sidebarloc = .01;
 	this.unpause();
 }
 Game.prototype.draw = function() {
 	this.run();
 	this.ctx.fillStyle = "#cccccc";
 	this.ctx.fillRect(0,0,canvasSize,canvasSize);
+	this.ctx.fillStyle = "#aaaaaa";
+	this.sidebarloc += this.sidebarloc/40;
+	if(this.sidebarloc>.011)this.sidebarloc=.01;
+	for(var p = this.sidebarloc; p<.3; p+=(p/10)){
+		//console.log(p + " " + canvasSize + " " + s*.1);
+		this.ctx.fillRect(0,canvasSize*(p*5-.05),canvasSize, canvasSize*p*.02);
+	}
 	
 	for(var i in this.enemies) {
-		this.ctx.drawImage(this.triangle, canvasSize*this.enemies[i]["x"], canvasSize*this.enemies[i]["y"], canvasSize*this.enemies[i]["w"], canvasSize*this.enemies[i]["h"]);
+		var y = this.enemies[i]["y"]*10+1;
+		y = y*y/100;
+		y = this.enemies[i]["y"];
+		var w = this.enemies[i]["w"]*canvasSize;
+		var wn = w * (y+.2);
+		console.log(y+" "+wn+" "+(canvasSize*this.enemies[i]["x"]+(w-wn)/2));
+		this.ctx.drawImage(this.triangle, canvasSize*this.enemies[i]["x"]+(w-wn)/2, canvasSize*y, wn, wn);
 	}
 
 	this.ctx.drawImage(this.doge, canvasSize*this.disppx, canvasSize*this.disppy, canvasSize*(this.playerw), canvasSize*(this.playerh));
 	this.ctx.fillStyle = "black";
-	this.ctx.fillText("Score: "+this.score,10,100);
+	this.ctx.fillText("Score: "+this.score,10,50);
 }
 Game.prototype.up = function() {
 	this.playery -= this.speed;
@@ -57,7 +71,7 @@ Game.prototype.run = function() {
 	this.disppx -= this.smooth * (this.disppx - this.playerx);
 	for(var i=this.enemies.length-1;i>=0;i--) {
 		var e = this.enemies[i];
-		e["y"]+=.02;
+		e["y"]+=(this.enemiesSize+e["y"]+.01)*.05+(this.score/5000000);
 		if(Util.rectCollides(e,{x:this.disppx+this.playerw*.1,y:this.disppy+this.playerh*.2,w:this.playerw*.8,h:this.playerh*.5})){
 			this.pause();
 			play_airhorn();
