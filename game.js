@@ -40,7 +40,7 @@ Game.prototype.draw = function() {
 		y = this.enemies[i]["y"];
 		var w = this.enemies[i]["w"]*canvasSize;
 		var wn = w * (y+.2);
-		console.log(y+" "+wn+" "+(canvasSize*this.enemies[i]["x"]+(w-wn)/2));
+		//console.log(y+" "+wn+" "+(canvasSize*this.enemies[i]["x"]+(w-wn)/2));
 		this.ctx.drawImage(this.triangle, canvasSize*this.enemies[i]["x"]+(w-wn)/2, canvasSize*y, wn, wn);
 	}
 
