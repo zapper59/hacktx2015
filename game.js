@@ -68,10 +68,10 @@ Game.prototype.center = function() {
 	this.playerx = .5-this.playerw/2;
 }
 Game.prototype.run = function() {
-	this.disppx -= this.smooth * (this.disppx - this.playerx);
+	this.disppx -= (this.smooth + Math.floor(this.score/10000)*.002)* (this.disppx - this.playerx);
 	for(var i=this.enemies.length-1;i>=0;i--) {
 		var e = this.enemies[i];
-		e["y"]+=(this.enemiesSize+e["y"]+.01)*.05+(this.score/5000000);
+		e["y"]+=(this.enemiesSize+e["y"]+.01)*.05+Math.floor(this.score/10000)*.002;
 		if(Util.rectCollides(e,{x:this.disppx+this.playerw*.1,y:this.disppy+this.playerh*.2,w:this.playerw*.8,h:this.playerh*.5})){
 			this.pause();
 			play_airhorn();
@@ -94,7 +94,7 @@ Game.prototype.run = function() {
 			this.score+=1000;
 		}
 	}
-	if((this.enemies.length==0 || this.enemies[this.enemies.length-1]["y"]>.05 ) && this.enemies.length<this.numenemies && Math.random()<.1 * (1-this.enemies.length/this.numenemies)){
+	if((this.enemies.length==0 || this.enemies[this.enemies.length-1]["y"]>.05 ) && this.enemies.length<this.numenemies && Math.random()<.2 * (1-this.enemies.length/this.numenemies)){
 		var x = (Math.floor(Math.random()*3))*.25+.25-this.enemiesSize/2;
 		if(this.enemies.length==0 || !(Math.abs(this.enemies[this.enemies.length-1]["x"]-x)==.25 && this.enemies[this.enemies.length-1]["y"]<this.playerh*2)) {
 			this.enemies.push({x: x, y:-this.enemiesSize, w:this.enemiesSize, h: this.enemiesSize});

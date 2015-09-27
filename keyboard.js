@@ -1,5 +1,4 @@
 window.onkeydown = function (e) {
-	e.preventDefault();
 	var code = e.keyCode ? e.keyCode : e.which;
 	if (code === 38) { //up key
 		currentGame.up();
@@ -16,7 +15,6 @@ window.onkeydown = function (e) {
 	}
 };
 window.onkeyup = function (e) {
-	e.preventDefault();
 	var code = e.keyCode ? e.keyCode : e.which;
 	if (code === 37 || code === 39) { //up key
 		if(code === 37){
@@ -35,11 +33,11 @@ window.onkeyup = function (e) {
 		currentGame.center();
 	}
 };
-$('window').on("touchstart mousedown", function(e){
+$('document').on("touchstart mousedown", function(e){
 	console.log(e);
 	e.preventDefault();
 	var pointer = getPointerEvent(e);
-	if(pointer.pageX < $(window).width()/2){
+	if(pointer.pageX < $(document).width()/2){
 		currentGame.left();
 		leftDown = true;
 		rightDown = false;
@@ -49,16 +47,16 @@ $('window').on("touchstart mousedown", function(e){
 		rightDown = true;
 	}
 });
-$('window').on("touchend mouseup touchcancel", function(e){
+$('document').on("touchend mouseup touchcancel", function(e){
 	e.preventDefault();
 	leftDown = false;
 	rightDown = false;
 	currentGame.center();
 });
-$('window').on("touchmove mousemove", function(e){
+$('document').on("touchmove mousemove", function(e){
 	e.preventDefault();
 	var pointer = getPointerEvent(e);
-	if(pointer.pageX < $(window).width()/2){
+	if(pointer.pageX < $(document).width()/2){
 		currentGame.left();
 		leftDown = true;
 		rightDown = false;
