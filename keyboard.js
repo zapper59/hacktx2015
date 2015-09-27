@@ -33,7 +33,7 @@ window.onkeyup = function (e) {
 		currentGame.center();
 	}
 };
-$('document').on("touchstart mousedown", function(e){
+$('.maincanvas').on("touchstart mousedown", function(e){
 	console.log(e);
 	e.preventDefault();
 	var pointer = getPointerEvent(e);
@@ -47,24 +47,29 @@ $('document').on("touchstart mousedown", function(e){
 		rightDown = true;
 	}
 });
-$('document').on("touchend mouseup touchcancel", function(e){
+$('.maincanvas').on("touchend mouseup touchcancel", function(e){
 	e.preventDefault();
 	leftDown = false;
 	rightDown = false;
 	currentGame.center();
 });
-$('document').on("touchmove mousemove", function(e){
+$('.maincanvas').on("touchmove mousemove", function(e){
 	e.preventDefault();
 	var pointer = getPointerEvent(e);
-	if(pointer.pageX < $(document).width()/2){
-		currentGame.left();
-		leftDown = true;
-		rightDown = false;
-	} else {
-		currentGame.right();
-		leftDown = false;
-		rightDown = true;
+	if(leftDown || rightDown){
+		if(pointer.pageX < $(document).width()/2){
+			currentGame.left();
+			leftDown = true;
+			rightDown = false;
+		} else {
+			currentGame.right();
+			leftDown = false;
+			rightDown = true;
+		}
 	}
 });
+var getPointerEvent = function(event) {
+    return event.originalEvent.targetTouches ? event.originalEvent.targetTouches[0] : event;
+};
 var leftDown = false;
 var rightDown = false;
